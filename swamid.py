@@ -50,7 +50,7 @@ def get_swamid_client():
         # "key_file": "./keys/swamid.key",
         # "cert_file": "./keys/swamid.crt",
         # "xmlsec_binary": "/usr/local/bin/xmlsec1",
-        # "attribute_map_dir": "./attributes"
+        "attribute_map_dir": "./attributes"
     }
     try:
         spConfig = Saml2Config()

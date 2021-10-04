@@ -44,6 +44,7 @@ def init_swamid_login():
         swamid_client = get_swamid_client()
         logging.info("The authentication STOPS here for now, the next line fails!")
         reqid, info = swamid_client.prepare_for_authenticate()
+        logging.info("The authentication preparation passed!")
 
         redirect_url = None
         for key, value in info["headers"].items():
@@ -56,7 +57,7 @@ def init_swamid_login():
         response.headers["Cache-Control"] = "no-cache, no-store"
         response.headers["Pragma"] = "no-cache"
     except Exception as ex:
-        logging.error(ex)
+        logging.error("Init failed")
         return b"<h3> Login init failed </h3>", 401
     return response
 
