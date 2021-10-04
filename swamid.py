@@ -29,6 +29,7 @@ def get_swamid_client():
             "inline": [METADATA],
         },
         # "idp_url": "https://ds-test.swamid.se/role/idp.ds",
+        # "entityid": "",
         "service": {
             "sp": {
                 "endpoints": {
