@@ -12,6 +12,9 @@ import uuid
 
 app = Flask(__name__)
 app.secret_key = str(uuid.uuid4())
+logger = logging.getLogger("werkzeug")  # grabs underlying WSGI logger
+handler = logging.FileHandler("test.log")  # creates handler for the log file
+logger.addHandler(handler)  # adds handler to the werkzeug WSGI logger
 logging.basicConfig(level=logging.INFO)
 
 global METADATA
@@ -47,7 +50,7 @@ def init_swamid_login():
         logging.info("The authentication preparation passed!")
 
         redirect_url = None
-        for key, value in info["headers"].items():
+        for key, value in info["headers"]:
             if key == "Location":
                 redirect_url = value
         assert redirect_url is not None
@@ -57,7 +60,7 @@ def init_swamid_login():
         response.headers["Cache-Control"] = "no-cache, no-store"
         response.headers["Pragma"] = "no-cache"
     except Exception as ex:
-        logging.error("Init failed")
+        logger.error(ex)
         return b"<h3> Login init failed </h3>", 401
     return response
 

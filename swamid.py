@@ -10,8 +10,8 @@ import logging
 # METADATA contains the contents of the url below
 # METADATA_URL = "http://mds.swamid.se/md/swamid-2.0.xml"
 
-with open("./metadata/swamid-2.0.xml") as metadata_file:
-    METADATA = metadata_file.read()
+# with open("./metadata/swamid-2.0.xml") as metadata_file:
+#    METADATA = metadata_file.read()
 
 
 def get_swamid_client():
@@ -22,14 +22,16 @@ def get_swamid_client():
     # TODO: Cache the metadata
     # rv = requests.get(METADATA_URL)
 
-    logging.info("Metadata is %s" % METADATA[0:100])
+    # logging.info("Metadata is %s" % METADATA[0:100])
 
     settings = {
+        #"metadata": {
+        #    "inline": [METADATA],
+        #},
         "metadata": {
-            "inline": [METADATA],
+            "remote": [{"url": "https://idp.nordu.net/idp/shibboleth", "cert": ""}],
         },
-        # "idp_url": "https://ds-test.swamid.se/role/idp.ds",
-        # "entityid": "",
+        "entityid": "http://localhost:8080",
         "service": {
             "sp": {
                 "endpoints": {
@@ -50,7 +52,7 @@ def get_swamid_client():
         # "key_file": "./keys/swamid.key",
         # "cert_file": "./keys/swamid.crt",
         # "xmlsec_binary": "/usr/local/bin/xmlsec1",
-        "attribute_map_dir": "./attributes"
+        "attribute_map_dir": "./attributes",
     }
     try:
         spConfig = Saml2Config()
